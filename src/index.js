@@ -1,6 +1,16 @@
 import "./style.css";
 
 const ulElement = document.querySelector("ul");
+const formElement = document.querySelector("form");
+const inputElement = document.querySelector("form > input");
+
+formElement.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const value = inputElement.value;
+  inputElement.value = "";
+  addTodo(value);
+  displayTodo();
+});
 
 const todos = [
   {
@@ -30,8 +40,16 @@ const createTodoElement = (todo, index) => {
   li.innerHTML = `
     <span class="todo ${todo.done ? "done" : ""}"></span>
     <p>${todo.text}</p>
+    <button>Supprimer</button>
   `;
   return li;
+};
+
+const addTodo = (text) => {
+  todos.push({
+    text,
+    done: false,
+  });
 };
 
 displayTodo();
