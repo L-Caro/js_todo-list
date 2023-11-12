@@ -13,19 +13,19 @@ formElement.addEventListener("submit", (event) => {
 
 const todos = [
   {
-    text: "je suis une todo",
+    text: "Je suis une todo",
     done: false,
     editMode: false,
   },
   {
-    text: "tout défoncer",
+    text: "Tout défoncer",
     done: true,
     editMode: false,
   },
   {
-    text: "je suis une autre todo",
+    text: "Je suis une autre todo",
     done: false,
-    editMode: true,
+    editMode: false,
   },
 ];
 
@@ -45,24 +45,41 @@ const createTodoElement = (todo, index) => {
   const li = document.createElement("li");
   const deleteButtonElement = document.createElement("button");
   deleteButtonElement.innerHTML = "Supprimer";
+  deleteButtonElement.setAttribute("class", "danger");
   const editButtonElement = document.createElement("button");
   editButtonElement.innerHTML = "Editer";
+  editButtonElement.setAttribute("class", "primary");
+
   deleteButtonElement.addEventListener("click", (event) => {
     event.stopPropagation();
     deleteTodo(index);
   });
   editButtonElement.addEventListener("click", (event) => {
     event.stopPropagation();
-    toogleEditMode(index);
+    toggleEditMode(index);
+  });
+
+  li.addEventListener("dblclick", (event) => {
+    toggleEditMode(index);
   });
 
   li.innerHTML = `
     <span class="todo ${todo.done ? "done" : ""}"></span>
-    <p>${todo.text}</p>
+    <p class="${todo.done ? "done" : ""}">${todo.text}</p>
     `;
+
+  let timer;
   li.addEventListener("click", (event) => {
-    toggleTodo(index);
+    if (event.detail === 1) {
+      timer = setTimeout(() => {
+        toggleTodo(index);
+      }, 100);
+    } else if (event.detail > 1) {
+      clearTimeout(timer);
+      toggleEditMode(index);
+    }
   });
+
   li.append(editButtonElement, deleteButtonElement);
 
   return li;
@@ -77,13 +94,21 @@ const createTodoEditElement = (todo, index) => {
 
   const saveButtonElement = document.createElement("button");
   saveButtonElement.innerHTML = "Enregistrer";
+  saveButtonElement.setAttribute("class", "success");
 
   const cancelButtonElement = document.createElement("button");
   cancelButtonElement.innerHTML = "Annuler";
+  cancelButtonElement.setAttribute("class", "danger");
 
   cancelButtonElement.addEventListener("click", (event) => {
     event.stopPropagation();
-    toogleEditMode(index);
+    toggleEditMode(index);
+  });
+
+  inputElement.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      editTodo(index, inputElement);
+    }
   });
 
   saveButtonElement.addEventListener("click", (event) => {
@@ -91,15 +116,19 @@ const createTodoEditElement = (todo, index) => {
   });
 
   li.append(inputElement, cancelButtonElement, saveButtonElement);
+  setTimeout(() => inputElement.focus(), 0);
 
   return li;
 };
 
 const addTodo = (text) => {
-  todos.push({
-    text,
-    done: false,
-  });
+  text = text.trim();
+  if (text !== "") {
+    todos.push({
+      text: `${text[0].toUpperCase()}${text.slice(1)}`,
+      done: false,
+    });
+  }
   displayTodo();
 };
 
@@ -113,15 +142,19 @@ const toggleTodo = (index) => {
   displayTodo();
 };
 
-const toogleEditMode = (index) => {
+const toggleEditMode = (index) => {
   todos[index].editMode = !todos[index].editMode;
   displayTodo();
 };
 
 const editTodo = (index, input) => {
-  const value = input.value;
-  todos[index].text = value;
-  todos[index].editMode = false;
+  const value = input.value.trim();
+  if (value !== "") {
+    todos[index].text = value;
+    todos[index].editMode = false;
+  } else {
+    todos[index].editMode = false;
+  }
   displayTodo();
 };
 

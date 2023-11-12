@@ -1,5 +1,9 @@
-* body {
+* {
   box-sizing: border-box;
+}
+
+p {
+  margin: 0;
 }
 
 body {
@@ -8,10 +12,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-p {
-  margin: 0;
 }
 
 .container {
@@ -35,6 +35,19 @@ button {
   cursor: pointer;
   margin: 0 3px;
   outline: 0;
+  color: white;
+}
+
+button.danger {
+  background: #eb2f06;
+}
+
+button.primary {
+  background: #4a69bd;
+}
+
+button.success {
+  background: #2ed573;
 }
 
 input {
@@ -57,7 +70,14 @@ ul {
 li {
   display: flex;
   align-items: center;
-  padding: 10px 0;
+  padding: 10px 0px;
+  cursor: pointer;
+}
+
+li:hover {
+  background: lightblue;
+  border-radius: 5px;
+  padding: 10px 0px 10px 5px;
 }
 
 li input {
@@ -66,6 +86,10 @@ li input {
 
 li p {
   flex: 1;
+}
+
+li p.done {
+  text-decoration: line-through;
 }
 
 li .todo {
