@@ -1,5 +1,5 @@
 # Introduction
-Bienvenue sur le projet `ToDo`, un gestionnaire de tâches simple et efficace. Ce projet a été développé en utilisant JavaScript, avec une interface utilisateur minimale pour vous permettre de vous concentrer sur l'essentiel : la gestion de vos tâches.
+Bienvenue sur le projet `ToDo`, un gestionnaire de tâches simple et efficace.Ce projet, configuré avec Webpack, a été développé en utilisant JavaScript, avec une interface utilisateur minimale pour vous permettre de vous concentrer sur l'essentiel : la gestion de vos tâches.
 
 ## Fonctionnalités
 Le script fourni implémente les fonctionnalités suivantes :
