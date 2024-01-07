@@ -1,13 +1,9 @@
 name: workflow principal
 on: [push]
 
-env:
-  VAR_1: from workflow
-
 jobs:
   say-hello:
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${{ 42 }}
-      - run: echo ${{ 'main' == 'top' }}
-      
+      - run: exit 1
+      - run: echo STEP 2
