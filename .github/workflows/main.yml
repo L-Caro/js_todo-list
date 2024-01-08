@@ -1,9 +1,11 @@
 name: workflow principal
-on: [push]
+on: push
 
 jobs:
   deploy:
-    if: ${{ github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
     steps:
-      - run: echo deploy in prod
+      - run: |
+          echo ::notice::un message info
+          echo ::warning::un message warning
+          echo ::error::un message error
